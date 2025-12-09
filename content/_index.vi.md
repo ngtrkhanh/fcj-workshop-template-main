@@ -7,13 +7,13 @@ chapter: false
 
 # Báo cáo thực tập
 ### Thông tin sinh viên:
-&emsp; **Họ và tên:** Nguyễn Văn A
+&emsp; **Họ và tên:** Nguyễn Trọng Khanh
 
 &emsp; **Số điện thoại:** 0989888999
 
-&emsp; **Email:** Anguyenvan@gmail.com
+&emsp; **Email:** nguyentrongkhanh18@gmail.com
 
-&emsp; **Trường:** Đại học Sư phạm Kỹ thuật TP.HCM
+&emsp; **Trường:** FPT UNIVERSITY
 
 &emsp; **Ngành:** Công nghệ thông tin
 
