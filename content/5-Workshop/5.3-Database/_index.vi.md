@@ -55,7 +55,7 @@ Truy cập **DynamoDB** > **Tables** > **Create table**.
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Màn hình tạo bảng AuroraEvents](images/dynamodb-create-event.png)
+> ![Screenshot: Màn hình tạo bảng AuroraEvents](/fcj-workshop-template-main/images/5-Workshop/image7.png)
 > 
 
 ### Bước 2: Tạo bảng Tasks
@@ -66,7 +66,7 @@ Tương tự, tạo bảng thứ hai cho Task.
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Màn hình tạo bảng AuroraTasks](images/dynamodb-create-task.png)
+> ![Screenshot: Màn hình tạo bảng AuroraTasks](/fcj-workshop-template-main/images/5-Workshop/image8.png)
 > 
 >
 > ### Bước 3: Tạo bảng Users
@@ -76,7 +76,7 @@ Tương tự, tạo bảng thứ ba cho User.
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Màn hình tạo bảng AuroraTasks](images/dynamodb-create-task.png)
+> ![Screenshot: Màn hình tạo bảng User](/fcj-workshop-template-main/images/5-Workshop/image9.png)
 > 
 
 }

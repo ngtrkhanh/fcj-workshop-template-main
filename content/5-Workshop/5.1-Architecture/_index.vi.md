@@ -1,9 +1,9 @@
 ---
 title: "Kiến trúc hệ thống & Luồng xác thực (Auth Flow)"
 date: 2025-12-09
-weight: 1
+weight: 2
 chapter: false
-pre: " <b> 5.1. </b> "
+pre: " <b> 5.2. </b> "
 ---
 
 {{% notice note %}}
@@ -14,8 +14,7 @@ pre: " <b> 5.1. </b> "
 
 Hệ thống **Aurora** được thiết kế theo kiến trúc **Serverless** hoàn toàn trên AWS, giúp tối ưu chi phí vận hành và khả năng mở rộng. Hệ thống tích hợp với **Google Cloud Platform** để cung cấp trải nghiệm đăng nhập liền mạch (Single Sign-On).
 
-![Sơ đồ kiến trúc Aurora](images/architecture.png)
-*(Lưu ý: Bạn hãy thay hình ảnh sơ đồ kiến trúc của bạn vào thư mục `images` và đặt tên là `architecture.png`)*
+![Sơ đồ kiến trúc Aurora](/fcj-workshop-template-main/images/5-Workshop/image2.png)
 
 ### Các thành phần chính:
 

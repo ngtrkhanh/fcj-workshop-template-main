@@ -1,9 +1,9 @@
 ---
 title: "System Architecture & Authentication Flow"
 date: 2025-12-09
-weight: 1
+weight: 2
 chapter: false
-pre: " <b> 5.1. </b> "
+pre: " <b> 5.2. </b> "
 ---
 
 {{% notice note %}}
@@ -15,8 +15,7 @@ pre: " <b> 5.1. </b> "
 The **Aurora** system is built entirely on a **Serverless architecture** on AWS, optimizing both scalability and operational cost.  
 It integrates with **Google Cloud Platform** to provide a seamless Single Sign-On (SSO) experience via Google authentication.
 
-![Aurora Architecture Diagram](images/architecture.png)  
-*(Note: Replace this placeholder diagram by placing your architecture image inside the `images` folder as `architecture.png`.)*
+![Aurora Architecture Diagram](/fcj-workshop-template-main/images/5-Workshop/image2.png)  
 
 ### Main Components:
 

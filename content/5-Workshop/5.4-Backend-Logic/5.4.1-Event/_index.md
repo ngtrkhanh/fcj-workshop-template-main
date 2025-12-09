@@ -1,7 +1,7 @@
 ---
 title: "Event CRUD (Event Handler)"
 date: 2025-12-09
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 5.4.1. </b> "
 ---
@@ -16,7 +16,7 @@ pre: " <b> 5.4.1. </b> "
 * **Description:** API for handling CRUD operations for the Events table.
 
 > **Image:**
-> ![Screenshot: Create Aurora_EventHandler Function](images/lambda-event-create.png)
+> ![Screenshot: Create Aurora_EventHandler Function](/fcj-workshop-template-main/images/5-Workshop/image16.png)
 
 # Step 2: Configure IAM Role (Full Access to Events)
 We need to grant full read/write permissions on the `events` table.
@@ -65,4 +65,6 @@ We need to grant full read/write permissions on the `events` table.
 ```
 # Step 3: Processing code (Node.js)
 Back to the Lambda Function interface, we will write Node.js code to process CRUD operations.
+> **Hình ảnh:**
+> ![Screenshot: Create code](/fcj-workshop-template-main/images/5-Workshop/image17.png)
 After completing, click **Deploy** to save.

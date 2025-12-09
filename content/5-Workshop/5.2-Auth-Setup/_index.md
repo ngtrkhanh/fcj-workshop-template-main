@@ -21,7 +21,7 @@ Go to **Credentials** → **Create Credentials** → **OAuth client ID**.
 
 > **Screenshot:**
 >
-> ![Screenshot: Creating Client ID and Secret](images/gcp-credentials.png)  
+> ![Screenshot: Creating Client ID and Secret](/fcj-workshop-template-main/images/5-Workshop/image1.png)  
 > *Figure 5.2.2: Creating OAuth Client ID and Client Secret.*
 
 {{% notice warning %}}
@@ -41,7 +41,7 @@ Fill in the **Client ID** and **Client Secret** obtained from Google Cloud.
 
 > **Screenshot:**
 >
-> ![Screenshot: Configuring Google Identity Provider in Cognito](images/cognito-idp-google.png)  
+> ![Screenshot: Configuring Google Identity Provider in Cognito](/fcj-workshop-template-main/images/5-Workshop/image3.png)  
 > *Figure 5.2.3: Entering Google authentication details into Cognito.*
 
 ### Step 2: Configure App Client & Domain
@@ -55,7 +55,8 @@ Under **App integration**:
 
 > **Screenshot:**
 >
-> ![Screenshot: Configuring App Client Settings](images/cognito-app-client.png)  
+> ![Screenshot: Configuring App Client Settings](/fcj-workshop-template-main/images/5-Workshop/image4.png)  
+>  ![Screenshot: Configuring App Client Settings](/fcj-workshop-template-main/images/5-Workshop/image5.png) 
 > *Figure 5.2.5: Configuring Redirect URL and OAuth Scopes.*
 
 ---
@@ -67,5 +68,5 @@ If the "Continue with Google" button appears and functions correctly, the setup 
 
 > **Screenshot:**
 >
-> ![Screenshot: Login screen with Google button](images/hosted-ui-login.png)  
+> ![Screenshot: Login screen with Google button](/fcj-workshop-template-main/images/5-Workshop/image6.png)  
 > *Figure 5.2.6: Login interface with Google successfully integrated.*

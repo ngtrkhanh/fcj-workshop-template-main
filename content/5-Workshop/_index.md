@@ -26,12 +26,12 @@ Key features and services include:
 + **Email Notification System:** Integrated with **Resend** to deliver beautiful HTML-formatted emails to users.
 + **Logic Processing:** Implemented with **AWS Lambda** to handle workflow execution whenever a new event is created.
 
-![Aurora Time Platform Architecture](/AWS/images/2-Proposal/aws.jpg)
+![Aurora Time Platform Architecture](/fcj-workshop-template-main/images/5-Workshop/image2.png)
 
 #### Detailed Sections
 
-1. [System Architecture & Authentication Flow](5.1-Architecture/)
-2. [Google Cloud & Amazon Cognito Configuration](5.2-Auth-Setup/)
+1. [Google Cloud & Amazon Cognito Configuration](5.2-Auth-Setup/)
+2. [System Architecture & Authentication Flow](5.1-Architecture/)
 3. [Database Design (Events & Tasks)](5.3-Database/)
 4. [Building API & Email Logic (Lambda)](5.4-Backend-Logic/)
 5. [User Interface (Frontend)](5.5-Frontend/)

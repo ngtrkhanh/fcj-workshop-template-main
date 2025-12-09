@@ -1,7 +1,7 @@
 ---
 title: "CRUD Todo (Tasks)"
 date: 2025-12-09
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 5.4.2. </b> "
 ---
@@ -16,7 +16,7 @@ pre: " <b> 5.4.2. </b> "
 * **Description:** API that handles CRUD operations for the Todo table.
 
 > **Image:**
-> ![Screenshot: Create Aurora_EventHandler](images/lambda-event-create.png)
+> ![Screenshot: Create Aurora_EventHandler](/fcj-workshop-template-main/images/5-Workshop/image14.png)
 
 # Step 2: Configure IAM Role (Full Access to Todo)
 We need to grant full CloudWatch and DynamoDB access to the `todo` table.
@@ -65,4 +65,6 @@ We need to grant full CloudWatch and DynamoDB access to the `todo` table.
 ```
 # Step 3: Implement the Logic (Node.js)
 Return to the Lambda Function interface and begin writing your Node.js code to handle the CRUD operations.
+> **Hình ảnh:**
+> ![Screenshot: Create code](/fcj-workshop-template-main/images/5-Workshop/image15.png)
 After completing, click **Deploy** to save your changes.

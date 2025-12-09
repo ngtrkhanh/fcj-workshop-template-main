@@ -21,7 +21,7 @@ Tiếp theo, vào mục **Credentials** > **Create Credentials** > **OAuth clien
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Màn hình tạo Client ID và Secret](images/gcp-credentials.png)
+> ![Screenshot: Màn hình tạo Client ID và Secret](/fcj-workshop-template-main/images/5-Workshop/image1.png)
 > *Hình 5.2.2: Tạo OAuth Client ID và Client Secret.*
 
 {{% notice warning %}}
@@ -41,7 +41,7 @@ Chúng ta điền **Client ID** và **Client Secret** đã lấy từ bước tr
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Cấu hình Google Identity Provider trong Cognito](images/cognito-idp-google.png)
+> ![Screenshot: Cấu hình Google Identity Provider trong Cognito](/fcj-workshop-template-main/images/5-Workshop/image3.png)
 > *Hình 5.2.3: Nhập thông tin xác thực Google vào Cognito.*
 
 
@@ -55,7 +55,8 @@ Cuối cùng, tại phần **App integration**:
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Cấu hình App Client Settings](images/cognito-app-client.png)
+> ![Screenshot: Cấu hình App Client Settings](/fcj-workshop-template-main/images/5-Workshop/image4.png)
+> > ![Screenshot: Cấu hình App Client Settings](/fcj-workshop-template-main/images/5-Workshop/image5.png)
 > *Hình 5.2.5: Cấu hình Redirect URL và OAuth Scopes.*
 
 ---
@@ -66,5 +67,5 @@ Cuối cùng, tại phần **App integration**:
 
 > **Hình ảnh thực hiện:**
 >
-> ![Screenshot: Giao diện đăng nhập có nút Google](images/hosted-ui-login.png)
+> ![Screenshot: Giao diện đăng nhập có nút Google](/fcj-workshop-template-main/images/5-Workshop/image6.png)
 > *Hình 5.2.6: Giao diện đăng nhập tích hợp Google thành công.*

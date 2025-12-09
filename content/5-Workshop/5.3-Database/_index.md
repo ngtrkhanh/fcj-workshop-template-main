@@ -62,7 +62,7 @@ Navigate to **DynamoDB → Tables → Create table**.
 * **Sort key:** `eventId` (String)
 
 > **Screenshot:**  
-> ![Screenshot: Creating AuroraEvents table](images/dynamodb-create-event.png)
+> ![Screenshot: Creating AuroraEvents table](/fcj-workshop-template-main/images/5-Workshop/image7.png)
 
 ---
 
@@ -75,7 +75,7 @@ Repeat the process to create the Tasks table.
 * **Sort key:** `todoId` (String)
 
 > **Screenshot:**  
-> ![Screenshot: Creating AuroraTasks table](images/dynamodb-create-task.png)
+> ![Screenshot: Creating AuroraTasks table](/fcj-workshop-template-main/images/5-Workshop/image8.png)
 
 ---
 
@@ -87,5 +87,5 @@ Finally, create the Users table.
 * **Partition key:** `userId` (String)
 
 > **Screenshot:**  
-> ![Screenshot: Creating Users table](images/dynamodb-create-task.png)
+> ![Screenshot: Creating Users table](/fcj-workshop-template-main/images/5-Workshop/image9.png)
 
