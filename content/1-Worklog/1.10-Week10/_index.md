@@ -1,44 +1,58 @@
 ---
 title: "Week 10 Worklog"
-date: "2025-09-09T19:53:52+07:00"
-weight: 2
+date: 2025-11-25
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
-### Week 10 Objectives:
+### Week 10 Goals:
 
-* Learn the basics of CI/CD on AWS.
-* Understand how AWS CodePipeline orchestrates build and deploy stages.
-* Create a simple pipeline using CodeCommit as the source.
-* Test automatic deployment on new commits.
+* Find an alternative email solution after SES sandbox removal request was rejected.  
+* Switch to **Resend** as the primary email delivery service.  
+* Configure **API authentication** (API Key / JWT) to protect the email endpoint.  
+* Rebuild the email workflow using Resend.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                             | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| MON | - Learn CI/CD concepts: source, build, test, deploy stages                                                       | 11/10/2025 | 11/10/2025 | <https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html> |
-| TUE | - Create a CodeCommit repository and push a simple application or sample code                                    | 11/11/2025 | 11/11/2025 | <> |
-| WED | - Create a simple CodePipeline using CodeCommit as the source stage                                              | 11/12/2025 | 11/12/2025 | <> |
-| THU | - Add a basic build or deploy stage (for example, deploy artifacts to S3 or EC2)                                | 11/13/2025 | 11/13/2025 | <> |
-| FRI | - Push new commits and observe CodePipeline executions and status                                                | 11/14/2025 | 11/14/2025 | <> |
-| SAT | - Adjust pipeline stages or actions if needed (timeouts, retry, manual approvals – if applicable)               | 11/15/2025 | 11/15/2025 | <> |
-| SUN | - Document the end-to-end CI/CD pipeline and how it automates deployments                                       | 11/16/2025 | 11/16/2025 | <> |
+---
 
+### Tasks for This Week:
+
+| Day | Tasks                                                                                                                                                      | Start       | End         | Reference |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------- | ---------- |
+| 2   | - Received SES sandbox removal rejection <br> - Evaluate project email requirements and possible alternatives                                              | 10/11/2025  | 10/11/2025  | |
+| 3   | - Research Resend: <br>&emsp; + Generate API Key <br>&emsp; + Domain verification <br>&emsp; + Explore email API usage                                   | 11/11/2025  | 11/11/2025  | https://resend.com/docs |
+| 4   | - Integrate Resend with Lambda: <br>&emsp; + Use SDK/HTTP API <br>&emsp; + Create email templates <br>&emsp; + Test email sending                        | 12/11/2025  | 12/11/2025  |  |
+| 5   | - Configure API Authentication: <br>&emsp; + API Key or <br>&emsp; + JWT via Cognito <br>&emsp; + Enable auth in API Gateway                              | 13/11/2025  | 13/11/2025  |  |
+| 6   | - End-to-End Testing: <br>&emsp; + Client → API Gateway → Lambda → Resend <br>&emsp; + Validate tokens <br>&emsp; + Debug logs in CloudWatch             | 14/11/2025  | 14/11/2025  | CloudWatch Logs |
+
+---
 
 ### Week 10 Achievements:
 
-* Learned high-level CI/CD concepts and how they apply on AWS.
+* **SES sandbox removal request was rejected**, causing limitations:
+  * Unable to send emails to unverified addresses
+  * Not suitable for production usage
+  * Required switching to an external provider
 
-* Explored AWS CodePipeline components:
-  * Source, build, and deploy stages
-  * Integrations with CodeCommit and other services
+* Successfully migrated to **Resend**:
+  * Created API Key
+  * Verified domain for better deliverability
+  * Sent emails successfully using Resend API
 
-* Created a simple CodePipeline:
-  * Used CodeCommit as the source repository
-  * Configured a basic deployment stage (for example, to EC2 or S3)
+* Integrated **Lambda + Resend**:
+  * Supports HTML templates
+  * Email types: OTP, verification, notification
+  * (Optional) Stored API Key securely in AWS Secrets Manager
 
-* Tested automatic deployment by pushing new commits and observing CodePipeline executions and status.
+* Implemented **API Authentication**:
+  * API Key or JWT Cognito authentication
+  * API Gateway now requires authentication to trigger Lambda
+  * Improved security of email API endpoint
+
+* Completed full workflow testing:
+  **Client → Authenticated API Gateway → Lambda → Resend → Email Delivered**
+
+* Strengthened understanding of external email providers and API authentication methods.
+
+* …

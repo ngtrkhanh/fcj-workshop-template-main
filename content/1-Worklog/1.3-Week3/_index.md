@@ -1,79 +1,59 @@
 ---
 title: "Week 3 Worklog"
 date: "2025-09-09T19:53:52+07:00"
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
+
 
 
 ### Week 3 Objectives:
 
-* Learn Auto Scaling concepts and implementation.
-* Configure Auto Scaling Groups for automatic instance management.
-* Integrate Auto Scaling with Load Balancer for high availability.
-* Understand and implement Elastic IP addresses.
-* Set up SNS notifications for Auto Scaling events.
-* Document AWS High Availability & Scaling concepts.
+* Connect and get acquainted with members of First Cloud Journey.
+* Understand basic AWS services, how to use the console & CLI.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                             | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| MON | - Learn Auto Scaling concepts: <br>&emsp; + Launch Templates <br>&emsp; + Auto Scaling Groups (ASG) <br>&emsp; + Scaling policies <br>&emsp; + Min/Max/Desired capacity <br>&emsp; + Health checks | 09/22/2025 | 09/22/2025 | <https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html> |
-| TUE | - Create Launch Template for EC2 instances <br> - Configure Launch Template with AMI, instance type, security groups <br> - Configure user data scripts if needed <br> - Test Launch Template by launching instance | 09/23/2025 | 09/23/2025 | <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html> |
-| WED | - Create Auto Scaling Group (ASG) <br> - Configure ASG with min/max/desired capacity <br> - Attach Launch Template to ASG <br> - Configure ASG to use multiple Availability Zones <br> - Integrate ASG with existing ALB Target Group | 09/24/2025 | 09/24/2025 | <https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html> |
-| THU | - Create CloudWatch alarms for CPU utilization <br> - Configure scale-out policy: Add instances when CPU > 50% <br> - Configure scale-in policy: Remove instances when CPU decreases <br> - Test scale-out by generating CPU load | 09/25/2025 | 09/25/2025 | <https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html> |
-| FRI | - Test scale-in behavior when CPU load decreases <br> - Verify ASG integration with ALB for high availability <br> - Monitor Auto Scaling activities and instance lifecycle <br> - Learn about Elastic IP (EIP) concepts | 09/26/2025 | 09/26/2025 | <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html> |
-| SAT | - Allocate Elastic IP address <br> - Assign EIP to EC2 instance for testing <br> - Create SNS topic for Auto Scaling notifications <br> - Configure ASG to send notifications to SNS topic | 09/27/2025 | 09/27/2025 | <https://docs.aws.amazon.com/sns/latest/dg/sns-getting-started.html> |
-| SUN | - Write documentation explaining AWS High Availability & Scaling concepts <br> - Review and document Auto Scaling architecture <br> - Clean up test resources if needed | 09/28/2025 | 09/28/2025 | <> |
+Week 3 sẽ tập trung vào RDS + Auto Scaling EC2 + CloudWatch, và Friday (T6) ghi rõ bạn tham gia sự kiện AWS/FCJ.
 
+***
 
+### Week 3 – Worklog (15–19/09/2025 pattern tiếp tục)
+
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ----- | ---------- | ---------------- | ------------------ |
+| MON | - Database Essentials with Amazon RDS: learn core concepts (DB instance, engine types, storage, Multi‑AZ, backup, security group for DB).[1] <br>- Review common use cases of RDS for web applications. | 22/09/2025 | 22/09/2025 | https://www.youtube.com/watch?v=TQFwQAre0H4&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=59|
+| TUE | - Hands-on: create an RDS database instance in the same VPC as the EC2 web server from Week 2.<br>- Configure security so that only the EC2 instance (or app subnet) can connect to the RDS instance. | 23/09/2025 | 23/09/2025 | https://www.youtube.com/watch?v=SlP-KdSs3IM&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=225 |
+| WED | - Scaling Applications with EC2 Auto Scaling: learn the concepts of Launch Template/Configuration, Auto Scaling Group, scaling policies, health checks.[3] <br>- Design a simple scaling policy based on CPU utilization for the web tier. | 24/09/2025 | 24/09/2025 |https://www.youtube.com/watch?v=hFVYG8WqfU0&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=80 |
+| THU | - Hands-on: create an Auto Scaling Group for web EC2 instances across at least two AZs (if available).<br>- Test scale‑out/scale‑in behavior by adjusting thresholds or generating load. | 25/09/2025 | 25/09/2025 | https://000006.awsstudygroup.com[3] |
+| FRI | - Attend an AWS event | 26/09/2025 | 26/09/2025 |
 ### Week 3 Achievements:
 
-* Learned Auto Scaling concepts and implementation:
-  * Launch Templates for standardized instance configuration
-  * Auto Scaling Groups (ASG) for automatic instance management
-  * Scaling policies and triggers
-  * Min/Max/Desired capacity configuration
-  * Health checks and instance replacement
+* Understood what AWS is and mastered the basic service groups: 
+  * Compute
+  * Storage
+  * Networking 
+  * Database
+  * ...
 
-* Successfully created Launch Template:
-  * Configured Launch Template with AMI, instance type, and security groups
-  * Set up user data scripts for instance initialization
-  * Tested Launch Template by launching instances
+* Successfully created and configured an AWS Free Tier account.
 
-* Configured Auto Scaling Group:
-  * Created ASG with proper min/max/desired capacity settings
-  * Attached Launch Template to ASG
-  * Configured ASG across multiple Availability Zones
-  * Integrated ASG with Application Load Balancer for high availability
+* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
 
-* Implemented dynamic scaling:
-  * Created CloudWatch alarms for CPU utilization monitoring
-  * Configured scale-out policy to add instances when CPU usage > 50%
-  * Configured scale-in policy to remove instances when CPU load decreases
-  * Successfully tested both scale-out and scale-in behaviors
+* Installed and configured AWS CLI on the computer, including:
+  * Access Key
+  * Secret Key
+  * Default Region
+  * ...
 
-* Integrated with Load Balancer:
-  * Connected ASG with existing ALB Target Group
-  * Verified high availability through automatic instance distribution
-  * Monitored Auto Scaling activities and instance lifecycle
+* Used AWS CLI to perform basic operations such as:
 
-* Implemented Elastic IP:
-  * Learned Elastic IP concepts and use cases
-  * Allocated Elastic IP address
-  * Assigned EIP to EC2 instance for testing
+  * Check account & configuration information
+  * Retrieve the list of regions
+  * View EC2 service
+  * Create and manage key pairs
+  * Check information about running services
+  * ...
 
-* Set up notifications:
-  * Created SNS topic for Auto Scaling notifications
-  * Configured ASG to send scaling event notifications to SNS
-  * Tested notification delivery for scaling activities
-
-* Documented knowledge:
-  * Wrote comprehensive documentation explaining AWS High Availability & Scaling concepts
-  * Documented Auto Scaling architecture and best practices
-
-* Gained hands-on experience with AWS Auto Scaling, high availability patterns, and infrastructure automation.
+* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
+* ...

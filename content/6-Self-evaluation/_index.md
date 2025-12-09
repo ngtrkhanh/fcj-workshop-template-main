@@ -6,24 +6,33 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
+I participated in the "Cessation Support Platform" project, where I significantly strengthened and expanded my technical capabilities across multiple domains:
+
+* **API Development & Integration**: Built and managed secure and scalable APIs using Amazon API Gateway, ensuring efficient communication between frontend and backend services.
+
+* **Authentication & User Management**: Implemented user authentication and authorization with AWS Cognito, enabling secure sign-up, sign-in, and session handling.
+
+* **Frontend Development**: Contributed to building the web interface by integrating APIs, handling user interactions, and ensuring smooth communication between the client side and backend services.
+
+* **Cloud Deployment**: Leveraged AWS Amplify to deploy and manage the frontend application, improving deployment speed and simplifying environment configuration.
+
+* **Database Management**: Designed and maintained a non-relational database using MongoDB, managing collections for user data, social interactions, and platform activity logs.
+
+* **Analysis & Problem-Solving**: Interpreted project requirements, tackled technical challenges such as API integration issues and data-handling complexities, and delivered practical solutions to maintain system stability.
+
+Regarding my professional conduct, I consistently aimed to complete my tasks with high quality, followed established team workflows, and maintained proactive communication with teammates to ensure the project moved in the right direction.
 
 To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
 
 | No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ✅    | ☐    | ☐       |
+| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality |  ☐    | ✅   | ☐       |
 | 2   | **Ability to learn**                | Ability to absorb new knowledge and learn quickly                                                | ☐    | ✅    | ☐       |
-| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            | ✅    | ☐    | ☐       |
+| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            |  ☐   |  ✅   | ☐       |
 | 4   | **Sense of responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅    | ☐    | ☐       |
-| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ☐    | ✅       |
+| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ✅    | ☐        |
 | 6   | **Progressive mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅    | ☐       |
 | 7   | **Communication**                   | Presenting ideas and reporting work clearly                                                      | ☐    | ✅    | ☐       |
 | 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅    | ☐    | ☐       |
@@ -34,6 +43,6 @@ To objectively reflect on my internship period, I would like to evaluate myself 
 
 ### Needs Improvement
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+* Strengthen personal discipline and maintain consistent adherence to organizational rules and regulations.  
+* Develop sharper problem-solving skills and the ability to approach challenges with a more analytical mindset.  
+* Enhance communication abilities in both daily interactions and professional settings, especially in managing and responding to situations effectively.

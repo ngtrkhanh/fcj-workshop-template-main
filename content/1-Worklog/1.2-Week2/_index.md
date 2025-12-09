@@ -1,66 +1,54 @@
 ---
 title: "Week 2 Worklog"
 date: "2025-09-09T19:53:52+07:00"
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
+
 
 
 ### Week 2 Objectives:
 
-* Learn advanced VPC architecture and networking concepts.
-* Understand and implement public/private subnet configurations.
-* Configure Internet Gateway and NAT Gateway for network connectivity.
-* Deploy and manage EC2 instances in VPC subnets.
-* Learn and implement Application Load Balancer (ALB) for load distribution.
+* Connect and get acquainted with members of First Cloud Journey.
+* Understand basic AWS services, how to use the console & CLI.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                             | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| MON | - Learn advanced VPC architecture: <br>&emsp; + CIDR blocks and subnetting <br>&emsp; + Public and private subnets <br>&emsp; + Route tables and routing <br>&emsp; + Internet Gateway (IGW) <br>&emsp; + NAT Gateway | 09/15/2025 | 09/15/2025 | <https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html> |
-| TUE | - Create a new VPC with proper CIDR block <br> - Create 2 public subnets in different Availability Zones <br> - Create 2 private subnets in different Availability Zones <br> - Configure route tables for public and private subnets | 09/16/2025 | 09/16/2025 | <https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html> |
-| WED | - Create and attach Internet Gateway to VPC <br> - Configure public route table to route traffic to Internet Gateway <br> - Create NAT Gateway in public subnet <br> - Configure private route table to route traffic to NAT Gateway | 09/17/2025 | 09/17/2025 | <https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html> <br><br> <https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html> |
-| THU | - Launch EC2 instance in public subnet <br> - Configure Security Groups for HTTP/HTTPS/SSH access <br> - Connect to EC2 instance via SSH <br> - Test network connectivity | 09/18/2025 | 09/18/2025 | <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html> |
-| FRI | - Learn about Application Load Balancer (ALB) <br> - Create Target Group and configure health checks <br> - Create ALB and attach to Target Group <br> - Launch multiple EC2 instances and attach to Target Group | 09/19/2025 | 09/19/2025 | <https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html> |
-| SAT | - Test load balancing functionality <br> - Verify traffic distribution across instances <br> - Test health check behavior | 09/20/2025 | 09/20/2025 | <> |
-| SUN | - Review and document VPC architecture <br> - Clean up resources if needed | 09/21/2025 | 09/21/2025 | <> |
-
+| Day | Task                                                                                                                                                                                                                                                                                       | Start Date | Completion Date | Reference Material                                                                                                                                    |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| MON | - Networking Essentials with Amazon VPC: review the concepts of VPC, Subnet, Route Table, Internet Gateway, NAT Gateway, Security Group, and NACL (high‑level overview).                                                                                                                   | 15/09/2025 | 15/09/2025      | https://000003.awsstudygroup.com/vi/000003.awsstudygroup​                                                                                             |
+| TUE | - Practice creating a custom VPC: create a VPC, 1 public subnet, 1 private subnet, attach an Internet Gateway, and configure the Route Table for the public subnet.- Document the CIDR blocks, AZs, and routes used for later EC2 labs.                                                    | 16/09/2025 | 16/09/2025      | https://000003.awsstudygroup.com/000003. https://www.youtube.com/watch?v=sllYqAECBoM&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=56awsstudygroup​                                                                                                |
+| WED | - Compute Essentials with Amazon EC2: study the concepts of instance types, AMI, EBS volumes, Security Groups, key pairs, and basic pricing.000004.awsstudygroup​- Prepare a plan: choose AMI, instance type, subnet, and Security Group for the web server lab.                           | 17/09/2025 | 17/09/2025      |https://www.youtube.com/watch?v=yAR6QRT3N1k&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=74 |
+| THU |- Attend an AWS event  | 18/09/2025 | 18/09/2025      |  |
+| FRI | - Attach and configure an additional EBS volume for the EC2 instance (create, attach, format, and mount the volume).- Write a short internal note titled “VPC + EC2 Lab – Week 2” describing the architecture, main steps, and security considerations (CIDR, Security Groups, key pairs). | 19/09/2025 | 19/09/2025      | https://www.youtube.com/watch?v=7NjNTnXon5s&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=44youtube​                                                  |
 
 ### Week 2 Achievements:
 
-* Learned advanced VPC architecture concepts:
-  * CIDR blocks and subnet design
-  * Public and private subnet configurations
-  * Route tables and routing mechanisms
-  * Internet Gateway for public internet access
-  * NAT Gateway for private subnet internet access
+* Understood what AWS is and mastered the basic service groups: 
+  * Compute
+  * Storage
+  * Networking 
+  * Database
+  * ...
 
-* Successfully created a new VPC with:
-  * 2 public subnets in different Availability Zones
-  * 2 private subnets in different Availability Zones
-  * Proper CIDR block allocation and subnet design
+* Successfully created and configured an AWS Free Tier account.
 
-* Configured networking infrastructure:
-  * Created and attached Internet Gateway to VPC
-  * Configured public route table to route traffic to Internet Gateway
-  * Created NAT Gateway in public subnet
-  * Configured private route table to route traffic through NAT Gateway
+* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
 
-* Deployed and managed EC2 instances:
-  * Launched EC2 instance in public subnet
-  * Connected to EC2 instance via SSH successfully
-  * Configured Security Groups for HTTP/HTTPS/SSH access
-  * Tested network connectivity and access
+* Installed and configured AWS CLI on the computer, including:
+  * Access Key
+  * Secret Key
+  * Default Region
+  * ...
 
-* Implemented Application Load Balancer (ALB):
-  * Learned ALB concepts and use cases
-  * Created Target Group with health check configuration
-  * Created Application Load Balancer
-  * Attached multiple EC2 instances to Target Group
-  * Tested load balancing and traffic distribution
+* Used AWS CLI to perform basic operations such as:
 
-* Gained hands-on experience with AWS networking services and advanced EC2 configurations.
+  * Check account & configuration information
+  * Retrieve the list of regions
+  * View EC2 service
+  * Create and manage key pairs
+  * Check information about running services
+  * ...
+
+* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
+* ...

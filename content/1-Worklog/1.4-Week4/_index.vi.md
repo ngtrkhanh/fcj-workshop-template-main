@@ -1,48 +1,56 @@
 ---
 title: "Worklog Tuần 4"
 date: "2025-09-09T19:53:52+07:00"
-weight: 1
+weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 4:
 
-* Làm quen với khái niệm cơ sở dữ liệu quản lý (managed database) trên Amazon RDS.
-* Tạo và cấu hình RDS MySQL instance.
-* Kết nối EC2 tới RDS một cách an toàn.
-* Hiểu và thực hành các tính năng backup, snapshot của RDS.
+* Kết nối, làm quen với các thành viên trong First Cloud Journey.
+* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Tìm hiểu khái niệm RDS: <br>&emsp; + Amazon RDS là gì? <br>&emsp; + Các engine hỗ trợ (MySQL, PostgreSQL, …) <br>&emsp; + So sánh RDS và database tự quản lý trên EC2 <br>&emsp; + Single-AZ vs Multi-AZ | 29/09/2025   | 29/09/2025      | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html> |
-| 3   | - Ôn lại các yêu cầu networking cho RDS: <br>&emsp; + DB subnet groups <br>&emsp; + Security Groups cho RDS và EC2 <br>&emsp; + Các lưu ý về VPC                                            | 30/09/2025   | 30/09/2025      | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html> |
-| 4   | - Tạo RDS MySQL instance: <br>&emsp; + Chọn instance class và storage <br>&emsp; + Cấu hình thông tin database ban đầu <br>&emsp; + Thiết lập backup window và retention                    | 01/10/2025   | 01/10/2025      | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html> |
-| 5   | - Cấu hình Security Groups và networking để EC2 kết nối được tới RDS <br> - Test kết nối từ EC2 tới RDS bằng MySQL client <br> - Thực hiện các câu lệnh CRUD đơn giản                      | 02/10/2025   | 02/10/2025      | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html> |
-| 6   | - Khám phá các tính năng backup của RDS: <br>&emsp; + Automated backups <br>&emsp; + Manual snapshots <br>&emsp; + Tổng quan point-in-time recovery                                         | 03/10/2025   | 03/10/2025      | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html> |
+| Ngày    | Nhiệm vụ                                                                                                                                                                                                                                                                                                       | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo                                                                                                                                                               |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Thứ Hai | - Thiết lập Hybrid DNS với Route 53 Resolver: tìm hiểu các khái niệm cơ bản về Route 53, Route 53 Resolver, hybrid DNS giữa on‑prem và AWS, inbound/outbound endpoint và Resolver rule (mức giới thiệu).- Ghi chú lại các trường hợp sử dụng hybrid DNS điển hình trong môi trường doanh nghiệp.               | 06/10/2025   | 06/10/2025      | https://www.youtube.com/watch?v=FGicpWOmMDI&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=46youtube​                                                                             |
+| Thứ Ba  | - Thực hiện theo lab Hybrid DNS: tạo các VPC, subnet cần thiết và cấu hình Route 53 ban đầu cho kịch bản lab.- Vẽ một sơ đồ kiến trúc nhỏ thể hiện DNS on‑prem, các inbound/outbound endpoint của Route 53 Resolver và các VPC.                                                                                | 07/10/2025   | 07/10/2025      | https://000010.awsstudygroup.com/vi/                                                                                                                                             |
+| Thứ Tư  | - Cấu hình Security Group cho lab Hybrid DNS: chỉ giữ lại các port ICMP (ping) và RDP cần cho việc kiểm thử, loại bỏ các port không dùng để tuân thủ nguyên tắc least‑privilege và tăng cường bảo mật.- Kiểm tra kết nối (ping, RDP) để đảm bảo các rule của Security Group hoạt động như mong đợi.            | 08/10/2025   | 08/10/2025      | https://www.youtube.com/watch?v=kE_krznNBFU&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=49youtube                                                                              |
+| Thứ Năm | - Hoàn tất Hybrid DNS với Route 53 Resolver: cấu hình inbound và outbound Resolver endpoint và tạo các Resolver rule để forward các tên miền cụ thể giữa on‑prem và AWS.- Kiểm tra phân giải DNS theo cả hai chiều (từ “on‑prem” lên AWS và từ AWS về lại on‑prem).                                            | 09/10/2025   | 09/10/2025      | https://www.youtube.com/watch?v=L-2YfZceoAU&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=61000003.awsstudygroup                                                                 |
+| Thứ Sáu | - Thiết lập AWS Transit Gateway: tìm hiểu các khái niệm và chi phí (attachment, xử lý dữ liệu) và tạo một Transit Gateway trong tài khoản lab.- Gắn các VPC hiện có vào Transit Gateway và cập nhật bảng định tuyến của VPC để lưu lượng giữa các VPC đi qua TGW; kiểm tra khả năng kết nối chéo giữa các VPC. | 10/10/2025   | 10/10/2025      | https://www.youtube.com/watch?v=W1m_OFPDui0&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=68 https://www.youtube.com/watch?v=QSXgL2KodQI&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i |
 
 
 ### Kết quả đạt được tuần 4:
 
-* Tạo thành công RDS MySQL instance với cấu hình phù hợp về instance class, storage và bảo mật.
+* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
+  * Compute
+  * Storage
+  * Networking 
+  * Database
+  * ...
 
-* Cấu hình Security Groups và networking để EC2 có thể kết nối an toàn tới RDS endpoint.
+* Đã tạo và cấu hình AWS Free Tier account thành công.
 
-* Kết nối EC2 tới RDS bằng MySQL client, chạy thử các câu lệnh CRUD cơ bản trên database.
+* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
 
-* Thực hành các tính năng backup của RDS:
-  * Automated backups và cấu hình thời gian giữ backup
-  * Tạo snapshot thủ công
-  * Khôi phục RDS instance từ snapshot để kiểm tra khả năng phục hồi
+* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
+  * Access Key
+  * Secret Key
+  * Region mặc định
+  * ...
 
-* Ghi chép lại các khái niệm quan trọng về RDS:
-  * Triển khai Single-AZ vs Multi-AZ
-  * Lựa chọn storage và các yếu tố hiệu năng
-  * Mô hình kết nối giữa tầng ứng dụng và RDS
+* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+
+  * Kiểm tra thông tin tài khoản & cấu hình
+  * Lấy danh sách region
+  * Xem dịch vụ EC2
+  * Tạo và quản lý key pair
+  * Kiểm tra thông tin dịch vụ đang chạy
+  * ...
+
+* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
+* ...
 
 

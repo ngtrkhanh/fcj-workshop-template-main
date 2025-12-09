@@ -1,47 +1,32 @@
 ---
 title: "Worklog Tuần 7"
-date: "2025-09-09T19:53:52+07:00"
-weight: 1
+date: 2025-11-11
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 7:
 
-* Học khái niệm serverless với AWS Lambda.
-* Tạo và kiểm thử Lambda function đơn giản.
-* Expose Lambda thông qua API Gateway.
-* Test API bằng các công cụ như Postman.
-
+* **Ôn tập chuyên sâu:** Hoàn thành việc ôn tập 4 trụ cột của **AWS Well-Architected Framework** để chuẩn bị cho bài thi giữa kỳ.
+* **Hệ thống hóa kiến thức:** Nắm vững vai trò và cách thức hoạt động của các dịch vụ trọng tâm (IAM, KMS, Multi-AZ, Lambda, CloudFront) trong từng trụ cột.
+* **Tinh thần & Chuẩn bị:** Giữ tinh thần thoải mái, sẵn sàng tham gia bài thi giữa kỳ.
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Tìm hiểu tổng quan về serverless và AWS Lambda: khi nào nên dùng Lambda, pricing, giới hạn                                                         | 20/10/2025   | 20/10/2025      | <https://docs.aws.amazon.com/lambda/latest/dg/welcome.html> |
-| 3   | - Tạo Lambda function đơn giản (Hello World / JSON response) <br> - Test function trực tiếp trên AWS Console                                         | 21/10/2025   | 21/10/2025      | <> |
-| 4   | - Cấu hình environment variables và IAM execution role cơ bản cho Lambda                                                                             | 22/10/2025   | 22/10/2025      | <https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html> |
-| 5   | - Tạo API Gateway (HTTP/REST) và tích hợp với Lambda                                                                                                | 23/10/2025   | 23/10/2025      | <https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html> |
-| 6   | - Deploy API lên stage và lấy invoke URL <br> - Test API bằng Postman (kiểm tra method, status code, payload)                                       | 24/10/2025   | 24/10/2025      | <> |
+| 2   | - Ôn tập nhóm thiết kế kiến trúc bảo mật (Secure Architectures) :IAM, KMS, Security Groups, NACLs, Secrets Manager                                                                               | 20/10/2025   | 20/10/2025      |
+| 3   | - Ôn tập thiết kế kiến trúc linh hoạt và bền vững (Resilient Architectures):Multi-AZ, Auto Scaling, Route 53, DR Strategies                                            | 21/10/2025   | 21/10/2025      |  |
+| 4   | - Ôn tập thiết kế hệ thống hiệu năng cao (High-Performing Architectures):Lambda, Caching, CloudFront, EC2 Auto Scaling, S3 (Storage Tiering).   | 22/10/2025   | 22/10/2025      |  |
+| 5   | -Ôn tập thiết kế hệ thống hiệu năng cao (High-Performing Architectures):Lambda, Caching, CloudFront, EC2 Auto Scaling, S3 (Storage Tiering).                  | 23/10/2025   | 23/10/2025      |  |
+| 6   | - Nghỉ ngơi chuẩn bị tinh thần mai đi thi giữa kì                                                                                | 24/10/2025   | 24/10/2025      |  |
 
 
 ### Kết quả đạt được tuần 7:
+** Hoàn thành Lộ trình Ôn tập: Đã hoàn thành việc ôn tập toàn bộ kiến thức chuyên sâu về 4 trụ cột AWS Well-Architected Framework (Bảo mật, Bền vững, Hiệu năng, Tối ưu chi phí) theo đúng kế hoạch đề ra. ** 
 
-* Học các khái niệm cốt lõi của AWS Lambda:
-  * Event-driven compute
-  * Mô hình thực thi stateless
-  * Handler function và runtime configuration
+Hệ thống hóa Kiến thức Trọng tâm: Đã nắm vững và phân loại vai trò của các dịch vụ cốt lõi (IAM, KMS, Multi-AZ, Auto Scaling, Lambda, CloudFront, S3) theo từng trụ cột kiến trúc.
 
-* Tạo Lambda function đơn giản trả về JSON và kiểm thử trực tiếp trên AWS Console.
+Củng cố Kiến thức Nền tảng: Đã ôn tập lại các nhóm dịch vụ AWS cơ bản (Compute, Storage, Networking, Database,...) và cách sử dụng AWS Console/CLI.
 
-* Tích hợp Lambda với API Gateway:
-  * Tạo API (HTTP/REST) và cấu hình method gọi tới Lambda
-  * Deploy API lên một stage và lấy invoke URL
-
-* Test endpoint bằng Postman:
-  * Gửi request HTTP và kiểm tra status code, payload trả về
-  * Xác minh Lambda được invoke chính xác thông qua CloudWatch Logs
-
-
+Chuẩn bị Bài thi: Đã tổng hợp và hệ thống hóa kiến thức, chuẩn bị tâm lý và tinh thần sẵn sàng tham gia bài thi giữa kỳ.

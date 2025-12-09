@@ -1,81 +1,56 @@
 ---
 title: "Worklog Tuần 3"
 date: "2025-09-09T19:53:52+07:00"
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+
 
 
 ### Mục tiêu tuần 3:
 
-* Học các khái niệm và triển khai Auto Scaling.
-* Cấu hình Auto Scaling Groups để quản lý instances tự động.
-* Tích hợp Auto Scaling với Load Balancer để đảm bảo high availability.
-* Hiểu và triển khai Elastic IP addresses.
-* Thiết lập SNS notifications cho các sự kiện Auto Scaling.
-* Viết tài liệu giải thích các khái niệm AWS High Availability & Scaling.
+* Kết nối, làm quen với các thành viên trong First Cloud Journey.
+* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Học các khái niệm Auto Scaling: <br>&emsp; + Launch Templates <br>&emsp; + Auto Scaling Groups (ASG) <br>&emsp; + Scaling policies <br>&emsp; + Min/Max/Desired capacity <br>&emsp; + Health checks | 09/22/2025   | 09/22/2025      | <https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html> |
-| 3   | - Tạo Launch Template cho EC2 instances <br> - Cấu hình Launch Template với AMI, instance type, security groups <br> - Cấu hình user data scripts nếu cần <br> - Kiểm tra Launch Template bằng cách launch instance | 09/23/2025   | 09/23/2025      | <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html> |
-| 4   | - Tạo Auto Scaling Group (ASG) <br> - Cấu hình ASG với min/max/desired capacity <br> - Gắn Launch Template vào ASG <br> - Cấu hình ASG sử dụng nhiều Availability Zones <br> - Tích hợp ASG với ALB Target Group hiện có | 09/24/2025   | 09/24/2025      | <https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html> |
-| 5   | - Tạo CloudWatch alarms cho CPU utilization <br> - Cấu hình scale-out policy: Thêm instances khi CPU > 50% <br> - Cấu hình scale-in policy: Xóa instances khi CPU giảm <br> - Kiểm tra scale-out bằng cách tạo CPU load | 09/25/2025   | 09/25/2025      | <https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html> |
-| 6   | - Kiểm tra hành vi scale-in khi CPU load giảm <br> - Xác minh tích hợp ASG với ALB cho high availability <br> - Giám sát các hoạt động Auto Scaling và instance lifecycle <br> - Tìm hiểu về Elastic IP (EIP) | 09/26/2025   | 09/26/2025      | <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html> |
-| 7   | - Allocate Elastic IP address <br> - Gán EIP vào EC2 instance để kiểm tra <br> - Tạo SNS topic cho Auto Scaling notifications <br> - Cấu hình ASG gửi notifications đến SNS topic | 09/27/2025   | 09/27/2025      | <https://docs.aws.amazon.com/sns/latest/dg/sns-getting-started.html> |
-| CN  | - Viết tài liệu giải thích các khái niệm AWS High Availability & Scaling <br> - Xem xét và tài liệu hóa kiến trúc Auto Scaling <br> - Dọn dẹp tài nguyên test nếu cần | 09/28/2025   | 09/28/2025      | <> |
-
+| Ngày    | Nhiệm vụ                                                                                                                                                                                                                              | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo                                                                            |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | --------------------------------------------------------------------------------------------- |
+| Thứ Hai | - Kiến thức nền tảng về cơ sở dữ liệu với Amazon RDS: tìm hiểu các khái niệm cốt lõi (DB instance, loại engine, storage, Multi‑AZ, backup, security group cho DB). - Ôn lại các trường hợp sử dụng phổ biến của RDS cho ứng dụng web. | 22/09/2025   | 22/09/2025      | https://www.youtube.com/watch?v=TQFwQAre0H4&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=59  |
+| Thứ Ba  | - Thực hành: tạo một RDS database instance trong cùng VPC với EC2 web server ở Tuần 2.- Cấu hình bảo mật để chỉ EC2 instance (hoặc subnet ứng dụng) mới có thể kết nối đến RDS instance.                                              | 23/09/2025   | 23/09/2025      | https://www.youtube.com/watch?v=SlP-KdSs3IM&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=225 |
+| Thứ Tư  | - Mở rộng ứng dụng với EC2 Auto Scaling: tìm hiểu các khái niệm Launch Template/Configuration, Auto Scaling Group, scaling policies, health checks. - Thiết kế một chính sách scaling đơn giản dựa trên CPU utilization cho web tier. | 24/09/2025   | 24/09/2025      | https://www.youtube.com/watch?v=hFVYG8WqfU0&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=80  |
+| Thứ Năm | - Thực hành: tạo một Auto Scaling Group cho các web EC2 instance trải trên ít nhất hai AZ (nếu có).- Kiểm tra hành vi scale‑out/scale‑in bằng cách điều chỉnh ngưỡng hoặc tạo tải.                                                    | 25/09/2025   | 25/09/2025      | https://000006.awsstudygroup.com                                                              |
+| Thứ Sáu | - Tham gia một sự kiện AWS                                                                                                                                                                                                            | 26/09/2025   | 26/09/2025      |                                                                                               |
 
 ### Kết quả đạt được tuần 3:
 
-* Đã học các khái niệm và triển khai Auto Scaling:
-  * Launch Templates để chuẩn hóa cấu hình instance
-  * Auto Scaling Groups (ASG) để quản lý instances tự động
-  * Scaling policies và triggers
-  * Cấu hình Min/Max/Desired capacity
-  * Health checks và thay thế instances
+* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
+  * Compute
+  * Storage
+  * Networking 
+  * Database
+  * ...
 
-* Đã tạo thành công Launch Template:
-  * Cấu hình Launch Template với AMI, instance type, và security groups
-  * Thiết lập user data scripts cho khởi tạo instance
-  * Kiểm tra Launch Template bằng cách launch instances
+* Đã tạo và cấu hình AWS Free Tier account thành công.
 
-* Đã cấu hình Auto Scaling Group:
-  * Tạo ASG với các thiết lập min/max/desired capacity phù hợp
-  * Gắn Launch Template vào ASG
-  * Cấu hình ASG trên nhiều Availability Zones
-  * Tích hợp ASG với Application Load Balancer cho high availability
+* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
 
-* Đã triển khai dynamic scaling:
-  * Tạo CloudWatch alarms để giám sát CPU utilization
-  * Cấu hình scale-out policy để thêm instances khi CPU usage > 50%
-  * Cấu hình scale-in policy để xóa instances khi CPU load giảm
-  * Kiểm tra thành công cả hành vi scale-out và scale-in
+* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
+  * Access Key
+  * Secret Key
+  * Region mặc định
+  * ...
 
-* Đã tích hợp với Load Balancer:
-  * Kết nối ASG với ALB Target Group hiện có
-  * Xác minh high availability thông qua phân phối instances tự động
-  * Giám sát các hoạt động Auto Scaling và instance lifecycle
+* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
 
-* Đã triển khai Elastic IP:
-  * Học các khái niệm và use cases của Elastic IP
-  * Allocate Elastic IP address
-  * Gán EIP vào EC2 instance để kiểm tra
+  * Kiểm tra thông tin tài khoản & cấu hình
+  * Lấy danh sách region
+  * Xem dịch vụ EC2
+  * Tạo và quản lý key pair
+  * Kiểm tra thông tin dịch vụ đang chạy
+  * ...
 
-* Đã thiết lập notifications:
-  * Tạo SNS topic cho Auto Scaling notifications
-  * Cấu hình ASG gửi scaling event notifications đến SNS
-  * Kiểm tra việc gửi notifications cho các hoạt động scaling
-
-* Đã viết tài liệu:
-  * Viết tài liệu toàn diện giải thích các khái niệm AWS High Availability & Scaling
-  * Tài liệu hóa kiến trúc Auto Scaling và best practices
-
-* Đã có kinh nghiệm thực hành với AWS Auto Scaling, high availability patterns, và tự động hóa hạ tầng.
+* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
+* ...
 
 

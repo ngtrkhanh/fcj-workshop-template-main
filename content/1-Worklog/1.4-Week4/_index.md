@@ -1,48 +1,57 @@
 ---
 title: "Week 4 Worklog"
 date: "2025-09-09T19:53:52+07:00"
-weight: 1
+weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 4 Objectives:
 
-* Learn managed database concepts with Amazon RDS.
-* Create and configure an RDS MySQL instance.
-* Connect an EC2 instance securely to RDS.
-* Understand and test RDS backup and snapshot features.
+* Connect and get acquainted with members of First Cloud Journey.
+* Understand basic AWS services, how to use the console & CLI.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                             | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| MON | - Learn Amazon RDS concepts: <br>&emsp; + What is RDS? <br>&emsp; + Supported engines (MySQL, PostgreSQL, etc.) <br>&emsp; + RDS vs self-managed database on EC2 <br>&emsp; + Single-AZ vs Multi-AZ | 09/29/2025 | 09/29/2025 | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html> |
-| TUE | - Review networking requirements for RDS: <br>&emsp; + DB subnet groups <br>&emsp; + Security Groups for RDS and EC2 <br>&emsp; + VPC considerations | 09/30/2025 | 09/30/2025 | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html> |
-| WED | - Create an RDS MySQL instance: <br>&emsp; + Choose instance class and storage <br>&emsp; + Configure initial database settings <br>&emsp; + Set backup window and retention | 10/01/2025 | 10/01/2025 | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html> |
-| THU | - Configure Security Groups and networking so EC2 can connect to RDS <br> - Test connectivity from EC2 to RDS using MySQL client <br> - Run simple CRUD queries | 10/02/2025 | 10/02/2025 | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html> |
-| FRI | - Explore RDS backup features: <br>&emsp; + Automated backups <br>&emsp; + Manual snapshots <br>&emsp; + Point-in-time recovery overview | 10/03/2025 | 10/03/2025 | <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html> |
-| SAT | - Create and restore from a manual snapshot for testing <br> - Validate that restored instance works correctly | 10/04/2025 | 10/04/2025 | <> |
-| SUN | - Document the RDS architecture, connectivity from EC2, and backup/restore procedures | 10/05/2025 | 10/05/2025 | <> |
+Dưới đây là **Week 4** (không có event), vẫn bám theo flow Cloud9 + S3 static website.
 
+***
 
+## Week 4 – Worklog
+| Day | Task                                                                                                                                                                                                                                                                                          | Start Date | Completion Date | Reference Material                                                                                                                                                                                                                                                     |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| MON | - Set up Hybrid DNS with Route 53 Resolver: learn basic concepts of Route 53, Route 53 Resolver, hybrid DNS between on‑prem and AWS, inbound/outbound endpoints, and Resolver rules (introduction).- Take notes about typical hybrid DNS use cases for enterprise environments.               | 06/10/2025 | 06/10/2025      | https://www.youtube.com/watch?v=FGicpWOmMDI&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=46youtube​|
+| TUE | - Follow the Hybrid DNS lab: create required VPCs, subnets and initial Route 53 configuration for the lab scenario.- Draw a small architecture diagram showing on‑prem DNS, Route 53 Resolver inbound/outbound endpoints, and VPCs.                                                           | 07/10/2025 | 07/10/2025      | https://000010.awsstudygroup.com/vi/|
+| WED | - Configure Security Groups for the Hybrid DNS lab: keep only ICMP (ping) and RDP ports needed for testing, remove unused ports to follow least‑privilege and improve security.- Test connectivity (ping, RDP) to ensure Security Group rules work as expected.                               | 08/10/2025 | 08/10/2025      | https://www.youtube.com/watch?v=kE_krznNBFU&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=49youtube|
+| THU | - Complete Hybrid DNS with Route 53 Resolver: configure inbound and outbound Resolver endpoints and create Resolver rules to forward specific domains between on‑prem and AWS.- Test DNS resolution in both directions (from “on‑prem” to AWS and from AWS back to on‑prem).                  | 09/10/2025 | 09/10/2025      | https://www.youtube.com/watch?v=L-2YfZceoAU&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=61000003.awsstudygroup|
+| FRI | - Set up AWS Transit Gateway: learn concepts and pricing (attachments, data processing) and create a Transit Gateway in the lab account.- Attach existing VPCs to the Transit Gateway and update VPC route tables so traffic between VPCs flows through the TGW; test cross‑VPC connectivity. | 10/10/2025 | 10/10/2025      | https://www.youtube.com/watch?v=W1m_OFPDui0&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i&index=68 https://www.youtube.com/watch?v=QSXgL2KodQI&list=PLahN4TLWtox2a3vElknwzU_urND8hLn1i|
 ### Week 4 Achievements:
 
-* Created an Amazon RDS MySQL instance with appropriate instance class, storage, and security configuration.
+* Understood what AWS is and mastered the basic service groups: 
+  * Compute
+  * Storage
+  * Networking 
+  * Database
+  * ...
 
-* Configured Security Groups and networking so that an EC2 instance could securely connect to the RDS endpoint.
+* Successfully created and configured an AWS Free Tier account.
 
-* Successfully connected from EC2 to RDS using MySQL client tools and tested basic CRUD operations.
+* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
 
-* Explored and tested RDS backup features:
-  * Automated backups and backup retention
-  * Manual snapshots
-  * Restoring an instance from a snapshot for recovery testing
+* Installed and configured AWS CLI on the computer, including:
+  * Access Key
+  * Secret Key
+  * Default Region
+  * ...
 
-* Documented key RDS concepts such as:
-  * Single-AZ vs Multi-AZ deployments
-  * Storage options and performance considerations
-  * Connectivity patterns between application tiers and RDS
+* Used AWS CLI to perform basic operations such as:
+
+  * Check account & configuration information
+  * Retrieve the list of regions
+  * View EC2 service
+  * Create and manage key pairs
+  * Check information about running services
+  * ...
+
+* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
+* ...

@@ -1,49 +1,50 @@
 ---
 title: "Week 11 Worklog"
-date: "2025-09-09T19:53:52+07:00"
-weight: 2
+date: 2025-12-02
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
+{{% notice warning %}}
+⚠️ **Note:** The content below is for reference only. Please **do not copy it verbatim** into your report.
 {{% /notice %}}
 
+### Week 11 Goals:
 
-### Week 11 Objectives:
+* Integrate frontend with backend using **AWS Amplify**.  
+* Use **Cognito** for authentication (login, JWT, API Key) in frontend.  
+* Integrate Lambda + Resend + API Gateway into frontend via Amplify API.  
+* Deploy full CI/CD automatically via **Amplify Console**.
 
-* Design and build a small mini project on AWS.
-* Combine multiple services such as VPC, EC2, S3, and RDS.
-* Test basic end-to-end functionality of the system.
+---
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                             | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| MON | - Design overall architecture for the mini project (VPC, subnets, EC2, S3, RDS)                                | 11/17/2025 | 11/17/2025 | <> |
-| TUE | - Create or reuse a VPC with required subnets and security groups                                               | 11/18/2025 | 11/18/2025 | <> |
-| WED | - Launch EC2 instances for the application layer and configure Security Groups                                  | 11/19/2025 | 11/19/2025 | <> |
-| THU | - Configure RDS database and connect it with EC2 application instances                                          | 11/20/2025 | 11/20/2025 | <> |
-| FRI | - Use S3 to store or serve static files for the project (if applicable)                                         | 11/21/2025 | 11/21/2025 | <> |
-| SAT | - Perform end-to-end testing: application → RDS, static content, connectivity                                   | 11/22/2025 | 11/22/2025 | <> |
-| SUN | - Document the mini project architecture, components, and test results                                          | 11/23/2025 | 11/23/2025 | <> |
+### Tasks for This Week:
 
+| Day | Tasks                                                                                                                                                                       | Start       | End         | Reference |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------- | ---------- |
+| 2   | - Configure Amplify project <br>&emsp; + `amplify init` <br>&emsp; + Connect frontend (React/Vue/Angular) <br>&emsp; + Add Amplify Auth (Cognito User Pool)                  | 17/11/2025  | 17/11/2025  | AWS Amplify Docs |
+| 3   | - Integrate Lambda + Resend API via **Amplify API** <br>&emsp; + Create REST/GraphQL endpoint <br>&emsp; + Configure authentication using Cognito JWT/API Key               | 18/11/2025  | 18/11/2025  | Amplify Docs, Cognito Docs |
+| 4   | - Test frontend → Amplify API → Lambda → Resend <br>&emsp; + Verify Cognito login works <br>&emsp; + Send OTP/notification emails from frontend                              | 19/11/2025  | 19/11/2025  | Project Docs |
+| 5   | - Deploy CI/CD via **Amplify Console** <br>&emsp; + Connect GitHub/GitLab/CodeCommit repo <br>&emsp; + Auto build & deploy frontend + backend Lambda                         | 20/11/2025  | 20/11/2025  | Amplify Console Docs |
+| 6   | - Test end-to-end pipeline <br>&emsp; + Push code → Amplify auto deploy <br>&emsp; + Check frontend UI, API authentication, and email sending via Resend                     | 21/11/2025  | 21/11/2025  | CloudWatch Logs |
+
+---
 
 ### Week 11 Achievements:
 
-* Designed and built a small AWS mini project that included:
-  * A VPC with appropriate subnets and networking
-  * EC2 instances for application compute
-  * S3 for static file storage
-  * RDS for managed relational database
+* Fully integrated **frontend with backend via Amplify**:
+  * Call Lambda + Resend API from frontend
+  * Cognito authentication (login, JWT, API Key) works
+  * OTP/verification/notification emails sent successfully
 
-* Connected the components together:
-  * EC2 application instances connected to RDS for data persistence
-  * S3 used to serve or store static assets
+* Deployed **fully automated CI/CD via Amplify Console**:
+  * Repo as source (GitHub/GitLab/CodeCommit)
+  * Auto build & deploy frontend + backend
+  * Production updated automatically on push
 
-* Tested basic end-to-end functionality:
-  * Connectivity between EC2 and RDS
-  * Read/write data to the database
-  * Access static content where applicable
+* End-to-end workflow tested:
+  **Frontend → Cognito Auth → Amplify API → Lambda → Resend → Email → Frontend displays notification**
 
-* Documented the mini project architecture and main design decisions.
-]
+* Learned how to integrate **serverless full-stack with Amplify + Cognito + Lambda + Resend** and CI/CD automation.
+
+* …
