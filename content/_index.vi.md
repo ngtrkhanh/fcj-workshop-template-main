@@ -9,7 +9,7 @@ chapter: false
 ### Thông tin sinh viên:
 &emsp; **Họ và tên:** Nguyễn Trọng Khanh
 
-&emsp; **Số điện thoại:** 0989888999
+&emsp; **Số điện thoại:** 0372863084
 
 &emsp; **Email:** nguyentrongkhanh18@gmail.com
 
