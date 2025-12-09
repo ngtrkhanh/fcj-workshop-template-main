@@ -5,122 +5,177 @@ weight: 1
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+# AWS Big Data Blog
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+## Cross-account data collaboration with Amazon DataZone and AWS analytics tools
 
----
+Authors: Arun Pradeep Selvaraj, Piyush Mattoo, Mani Yamaraja — March 5, 2025  
+Topics: Amazon DataZone, Amazon Redshift, AWS Glue, Technical How-to, Thought Leadership
 
-## Architecture Guidance
+Data sharing is critical to innovation, growth, and collaboration. Gartner notes that organizations promoting data sharing outperform peers on business value metrics. A simple access-and-share mechanism is essential, yet cross-account permissions and finding the right data across accounts are common challenges when publishing and consuming data products on AWS.
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
-
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
-
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+Amazon DataZone is a fully managed data management service to catalog, discover, share, and govern data across AWS.
 
 ---
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## Solution overview
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+This solution enables cross-account collaboration using Amazon DataZone domain association while preserving security and governance. We publish data assets via the Amazon DataZone business data catalog so other accounts can discover them, then query those assets from another AWS account using tools such as Amazon Athena and the Amazon Redshift query editor.
 
----
+- **Producer account**: hosts data assets and the Amazon DataZone domain.  
+- **Consumer account**: needs access to producer data.  
+- Domain association uses AWS Resource Access Manager (AWS RAM). If both accounts are in the same AWS Organizations organization, association is automatic; otherwise AWS RAM sends an invitation for the consumer to accept or decline.
 
-## Technology Choices and Communication Scope
-
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Personas:
+- **Data administrators**: own producer/consumer; create the domain, configure/accept domain associations.  
+- **Data publishers**: in producer; create publish projects/environments, produce/publish assets, approve subscription requests.  
+- **Data subscribers**: in consumer; create subscribe projects/environments, discover/subscribe to assets, query data for insights.
 
 ---
 
-## The Pub/Sub Hub
+## Prerequisites
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+- Two AWS accounts: producer and consumer.  
+- An Amazon Redshift provisioned cluster or Redshift Serverless workgroup in each account, provisioned by a data admin.  
+- A secret in AWS Secrets Manager storing master user credentials for each Redshift cluster/workgroup. Data admins create secrets; publishers/subscribers obtain secret ARNs when creating environments/profiles.  
+- Amazon DataZone uses Amazon Redshift datashares for cross-account sharing; both producer and consumer clusters must be encrypted and use supported RA3 types (ra3.16xlarge, ra3.4xlarge, ra3.xlplus) or Redshift Serverless. See datashare considerations for encryption.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
-
----
-
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+High-level steps:
+1) Create Amazon DataZone domain in producer.  
+2) Send domain association request from producer to consumer.  
+3) Accept domain association in consumer.  
+4) Add data users to the domain.  
+5) Create publish projects for AWS Glue and Amazon Redshift (producer).  
+6) Create Glue and Redshift environments to publish assets (producer).  
+7) Create and run data sources for Glue/Redshift to publish assets to the business catalog.  
+8) Create subscribe projects for Glue/Redshift (consumer).  
+9) Create environment profiles/environments for Glue/Redshift in subscribe projects.  
+10) Subscribe to Glue/Redshift tables and consume via Athena and Redshift query editor.
 
 ---
 
-## Front Door Microservice
+## Create Amazon DataZone domain (producer)
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+- Log in to the producer console as data admin.  
+- Create domain `Demo_cross_account_domain` (Quick setup enables default blueprints and environment profiles for data lake and data warehouse).
 
 ---
 
-## Staging ER7 Microservice
+## Request domain association (producer → consumer)
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+- In the producer Amazon DataZone console, open the domain, go to **Associated Accounts**, enter consumer account ID(s), choose **Request association**.  
+- Use policy `AWS RAM DataZonePortalReadWrite` so consumer users can call Amazon DataZone APIs and use the data portal.
 
 ---
 
-## New Features in the Solution
+## Accept domain association (consumer)
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+- Log in to consumer (same Region), open Amazon DataZone → **View requests** → select domain → **Review request** → **Accept association**.  
+- Domain shows **associated**.  
+- Enable environment blueprints: select domain → Blueprints → enable **DefaultDataLake** (provide Glue Manage Access role) and **DefaultDataWarehouse**.
+
+---
+
+## Add data users to the domain
+
+- As data admin in producer: **User management** → **Add** → **Add IAM users**.  
+- Add publisher IAM users from the current account; add subscriber IAM users from the associated consumer account.
+
+---
+
+## Create publish projects (producer)
+
+- Data publisher in producer creates projects in the data portal:  
+  - `Glue_Publish_Project` (AWS Glue assets)  
+  - `Redshift_Publish_Project` (Amazon Redshift assets)
+
+---
+
+## Create publish environments (producer)
+
+### Glue
+- In `demo_cross_account_domain`, open `Glue_Publish_Project`, create environment `Glue_Publish_Environment` with default DataLakeProfile.  
+- Leave producer_glue_db_name, consumer_glue_db_name, Workgroup_name blank.  
+- Open Athena (Analytics tools), ensure `Glue_Publish_Environment` and database `glue_publish_environment_pub_db`.  
+- Run CTAS to create sample table `mkt_sls_table` (sales/marketing sample). Verify the table exists.
+
+### Redshift
+- In `Redshift_Publish_Project`, create environment `Redshift_Publish_Environment` with default data warehouse profile.  
+- Provide Redshift cluster/workgroup, database name, and secret ARN. Secrets must include tags:  
+  - Cluster: `DataZone.rs.cluster: <cluster:db>`  
+  - Serverless: `DataZone.rs.workgroup: <workgroup:db>`  
+  - `AmazonDataZoneProject: <project_id>`  
+  - `AmazonDataZoneDomain: <domain_id>`  
+- In Redshift query editor, create table `rs_sls_tbl` via CTAS (sample sales data). Verify the table exists.
+
+---
+
+## Publish assets to the business data catalog (producer)
+
+### Glue data source
+- In `Glue_Publish_Project` → `Glue_Publish_Environment`, create data source `glue-publish-datasource`, type **AWS Glue**, select environment, database `glue_publish_environment_pub_db`, table selection `*`.  
+- Run on demand; after run, `mkt_sls_table` appears. Review metadata → **Accept All** → **Publish Asset**.
+
+### Redshift data source
+- In `Redshift_Publish_Project` → `Redshift_Publish_Environment`, create data source `rs-publish-datasource`, type **Amazon Redshift**.  
+- Provide cluster/workgroup and secret; select database `dev`, schema `datazone_env_redshift_publish_environment`.  
+- Run on demand; after run, `rs_sls_tbl` appears. Review metadata → **Accept All** → **Publish Asset**.
+
+---
+
+## Create subscribe projects (consumer)
+
+- In consumer data portal, create:  
+  - `Glue_Subscribe_Project` (for AWS Glue assets)  
+  - `Redshift_Subscribe_Project` (for Amazon Redshift assets)
+
+---
+
+## Create environment profiles and environments (consumer)
+
+### Glue
+- Create environment profile `glue_subscribe-env-profile`: Blueprint **Default Data Lake**; account = consumer; Authorized projects = All; Publishing = Publish from any database.  
+- Create environment `glue_subscribe_environment` from the profile (optional: producer/consumer Glue DB names, workgroup). Wait until complete.
+
+### Redshift
+- In `Redshift_Subscribe_Project`, create profile `redshift_subscribe-env-profile`: Blueprint **Default Data Warehouse**; Parameter set = Enter my own; choose Cluster or Serverless; provide Redshift secret ARN; Authorized projects = All; Publishing = Publish any schema.  
+- Create environment `redshift_subscribe_environment` from the profile.
+
+---
+
+## Subscribe to AWS Glue and Amazon Redshift tables
+
+### Glue subscription
+- As data subscriber (consumer), open `Glue_Subscribe_Project`, select **Market Sales Table** (`mkt_sls_table`) → **Subscribe** with justification.  
+- Publisher approves; subscriber confirms in **Subscribed Assets**.  
+- Open Amazon Athena (environment `glue_subscribe_environment`, DB `glue_subscribe_environment_sub_db`), preview `mkt_sls_table` and verify data.
+
+### Redshift subscription
+- In `Redshift_Subscribe_Project`, search **Sales Table** (`rs_sls_tbl`) → **Subscribe** with justification.  
+- Publisher approves; subscriber confirms in **Subscribed Assets**.  
+- Open Redshift Query Editor V2 via project link, create a connection with temporary IAM credentials, select DB for the environment, and run:  
+  `SELECT * FROM "dev"."datazone_env_redshift_subscribe_environment"."rs_sls_tbl";`
+
+---
+
+## Cleanup
+
+- Delete Amazon DataZone projects created for the walkthrough.  
+- Delete the Amazon DataZone domain if it was created for the lab.  
+- Delete Redshift clusters/workgroups and related Secrets Manager secrets in both producer and consumer accounts.
+
+---
+
+## Summary
+
+Cross-account data sharing is complex due to permissions and security. This solution shows how to publish and consume data across AWS accounts using Amazon DataZone with AWS Glue and Amazon Redshift, maintaining consistent governance and secure access. You can monitor access/activity with AWS Lake Formation and CloudTrail (90-day default logs). Extend the pattern to more accounts as needed.
+
+---
+
+## About the authors
+
+- **Arun Pradeep Selvaraj** – Senior Solutions Engineer at AWS; focuses on digital transformation and cloud modernization.  
+- **Piyush Mattoo** – Senior Solutions Architect (Financial Services) at AWS; 10+ years building distributed, scalable systems; MS CS (UMass); enjoys camping/hiking.  
+- **Mani Yamaraja** – Senior Customer Solutions Manager (Financial Services) at AWS; 10+ years guiding customer cloud journeys; customer-obsessed, designs tech aligned to business goals.

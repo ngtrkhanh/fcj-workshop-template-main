@@ -27,7 +27,9 @@ chapter: false
 
 &emsp; **Internship Duration:** From 12/08/2025 to 12/11/2025
 
-![Your profile picture](/images/OSK.jpg)
+<div style="text-align: center; margin: 20px 0;">
+<img src="/images/IMG_0449.jpg" alt="Your profile picture" style="width: 250px; height: auto; display: block; margin: 0 auto;" />
+</div>
 
 ### Report Content
 

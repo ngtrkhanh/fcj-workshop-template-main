@@ -1,126 +1,65 @@
 ---
 title: "Blog 1"
-date: "2025-09-09T19:53:52+07:00"
+date: "2025-09-30"
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Launch of the Cloud Innovation Center at the University of Pittsburgh
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+Every year, cloud technologies and artificial intelligence (AI) continue to reshape how universities, researchers, and public sector organizations solve their most complex challenges. In a milestone collaboration that is set to transform both health sciences research and athletic performance, the University of Pittsburgh (Pitt) and Amazon Web Services (AWS) have announced the launch of the **Health Sciences and Sports Analytics Cloud Innovation Center (CIC)** — operated by AWS.
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+This is the **first CIC on the East Coast** of the United States and the first center dedicated specifically to **health sciences and sports analytics**, marking a significant advancement in how cloud technology and AI can be applied to these rapidly evolving fields.
 
 ---
 
-## Architecture Guidance
+## Pioneering innovation in medicine and sports
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+The new CIC will leverage AWS’s full suite of machine learning and AI tools, including **Amazon SageMaker** and **Amazon Bedrock**, to develop cutting-edge solutions for real-world challenges.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+> “At AWS, we believe innovation happens when technology is paired with curious minds ready to solve big problems,”  
+> — **Valerie Singer**, Global Director for Education at AWS.
 
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
-
----
-
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+She added that combining Pitt’s deep expertise in health sciences with AWS’s cloud capabilities creates a powerful “flywheel effect” that accelerates continuous innovation. Together, AWS and Pitt aim to improve medical outcomes and elevate student-athlete performance. This partnership represents exactly the type of collaboration capable of delivering breakthrough results.
 
 ---
 
-## Technology Choices and Communication Scope
+## A hub for innovation in a transforming city
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+The establishment of the new Cloud Innovation Center builds on Pittsburgh’s long-standing legacy of reinvention — from a historic industrial hub to a modern center for technology, medicine, and data science.
 
----
+Through this initiative:
 
-## The Pub/Sub Hub
-
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+- **Students** gain hands-on experience with cloud and AI technologies, preparing them for leadership roles in the digital economy.  
+- **Researchers** gain access to scalable AWS infrastructure to accelerate groundbreaking discoveries in the health sciences.  
+- **Athletic programs** begin leveraging real-time data and analytics to enhance performance, strategy, and training outcomes.  
+- **Open-source solutions** developed within the CIC will benefit communities far beyond the campus.
 
 ---
 
-## Core Microservice
+## Student-led innovation
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+Like the successful CICs at **Arizona State University**, **University of British Columbia**, and **California Polytechnic State University**, Pitt’s CIC will follow a **student-driven innovation model**.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+Through rapid prototyping and iterative experimentation, students across previous CICs have already developed more than **150 open-source solutions** addressing public sector challenges — while building advanced technical skills and contributing tangible value to their communities.
 
----
+At Pitt, enthusiasm is already high, with the first cohort of interns beginning their work in mid-April 2025.
 
-## Front Door Microservice
+> “Working with AWS and backend technologies has always fascinated me, and the CIC’s focus on solving real-world problems with these tools is exactly what drew me in,”  
+> — **Mohammed Misran**, CIC Intern.
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+> “I’m excited to dive deeper and contribute to impactful projects. My goal isn’t just to develop technical skills — it’s to maximize innovation and solve complex problems that traditional methods struggle to address… for Pitt!”
 
 ---
 
-## Staging ER7 Microservice
+## Looking ahead
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+With its official launch today, the Pitt–AWS CIC opens a promising new chapter in innovation for both **health sciences** and **sports analytics**.
+
+The collaboration between AWS and the University of Pittsburgh is poised to accelerate the development of AI-driven solutions while preparing the next generation of technology leaders.
 
 ---
 
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+**Author**  
+**AWS Public Sector Blog Team** — covering innovations in education, government, healthcare, and public sector transformation powered by AWS technologies.

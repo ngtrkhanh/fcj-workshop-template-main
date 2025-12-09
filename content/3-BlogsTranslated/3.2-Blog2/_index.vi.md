@@ -6,122 +6,177 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+# Trí tuệ nhân tạo: Kết hợp tìm kiếm từ khóa & ngữ nghĩa cho văn bản và hình ảnh với Amazon Bedrock và Amazon OpenSearch Service
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Tác giả: Renan Bertolazzi, Birender Pal, Sarath Krishnan (24/04/2025) — Amazon Bedrock, Amazon OpenSearch Service, Amazon Titan, Intermediate (200)
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Khách hàng mong muốn tìm sản phẩm nhanh, chính xác và trực quan. Trải nghiệm tìm kiếm tốt nâng chuyển đổi, AOV và giữ chân. 78% người dùng sẵn sàng mua lại nếu được cá nhân hóa. Với danh mục lớn, hybrid search là lợi thế chiến lược.
 
----
+- **Keyword search**: khớp chính xác tên/thuộc tính.  
+- **Semantic search**: dùng embeddings để hiểu ngữ nghĩa, chịu biến thể diễn đạt, hỗ trợ đa phương thức (văn bản + hình ảnh).  
+- **Hybrid search**: kết hợp điểm keyword + semantic; thường cải thiện chất lượng 8–12% so với keyword và ~15% so với natural language.
 
-## Hướng dẫn kiến trúc
+Amazon OpenSearch Service là vector database được khuyến nghị cho Amazon Bedrock, cung cấp tìm kiếm vector độ trễ mili-giây. Amazon Titan Multimodal Embeddings G1 (qua Bedrock) tạo embedding chung cho văn bản và hình ảnh, cho phép truy vấn liên phương thức.
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Mục tiêu: Xây dựng giải pháp hybrid search đa phương thức, cho phép người dùng gửi văn bản và/hoặc ảnh để truy xuất kết quả liên quan từ bộ dữ liệu hình ảnh bán lẻ mẫu.
 
 ---
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Tổng quan kiến trúc
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Hai luồng chính:
 
----
+- **Ingestion**: sinh multimodal embeddings (văn bản, ảnh, metadata) bằng Bedrock (Titan) và lưu vào OpenSearch.  
+- **Query**: search pipeline trên OpenSearch kết hợp keyword + neural search; normalization processor chuẩn hóa và gộp điểm.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
-
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Thành phần:
+- Amazon Bedrock (Titan Multimodal Embeddings G1)  
+- Amazon OpenSearch Service (vector + hybrid pipeline)  
+- Amazon S3 (lưu dữ liệu nguồn)  
+- Amazon SageMaker Notebook (ingestion, kiểm thử)  
+- (Tùy chọn) SNS/SQS/Step Functions cho orchestration
 
 ---
 
-## The pub/sub hub
+## Quy trình nhập dữ liệu (Data ingestion)
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+1) Đọc văn bản, ảnh, metadata từ S3; mã hóa ảnh Base64.  
+2) Gửi dữ liệu tới Bedrock (Titan) để tạo embeddings.  
+3) Lưu embeddings + metadata vào OpenSearch (bulk).  
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
-
----
-
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
+Ví dụ tạo index (rút gọn):
 ```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+settings:
+  index.knn: true
+  number_of_shards: 2
+mappings:
+  properties:
+    amazon_titan_multimodal_embeddings:
+      type: knn_vector
+      dimension: 1024
+      method:
+        name: hnsw
+        engine: lucene
+```
+
+---
+
+## Quy trình truy vấn (Query workflow)
+
+1) Client gửi truy vấn: văn bản, ảnh Base64, hoặc cả hai.  
+2) Pipeline chạy:
+   - Keyword search (multi_match).  
+   - Neural search (embedding từ Titan cho văn bản/ảnh).  
+3) Normalization (ví dụ `min_max`) + combination (`arithmetic_mean`) gộp điểm.  
+4) Trả về kết quả xếp hạng cuối.
+
+Ví dụ search pipeline:
+```json
+{
+  "phase_results_processors": [
+    {
+      "normalization-processor": {
+        "normalization": { "technique": "min_max" },
+        "combination": {
+          "technique": "arithmetic_mean",
+          "parameters": {
+            "weights": [OPENSEARCH_KEYWORD_WEIGHT, 1 - OPENSEARCH_KEYWORD_WEIGHT]
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+Ví dụ truy vấn hybrid:
+```json
+{
+  "query": {
+    "hybrid": {
+      "queries": [
+        { "multi_match": { "query": "<query_text>" } },
+        {
+          "neural": {
+            "vector_embedding": {
+              "query_text": "<query_text>",
+              "query_image": "<base64_image>",
+              "model_id": "<titan_connector_model_id>",
+              "k": 5
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+## Điều kiện tiên quyết
+
+- Tài khoản AWS.  
+- Bedrock bật Amazon Titan Multimodal Embeddings G1.  
+- OpenSearch Service domain.  
+- SageMaker notebook.  
+- Kiến thức IAM, EC2, OpenSearch, SageMaker, Python.  
+- Mã nguồn mẫu trên GitHub.
+
+---
+
+## Tạo connector Amazon Bedrock trong OpenSearch Service
+
+- IAM role cho phép `bedrock:InvokeModel` với Titan Multimodal Embeddings G1; trust `opensearchservice.amazonaws.com`.
+- Đăng ký model group, tạo connector, triển khai model trong OpenSearch (deploy=true).
+
+---
+
+## Tạo search pipeline & bật hybrid search
+
+- Dùng normalization (min_max) + combination (arithmetic_mean) để gộp điểm keyword/semantic.  
+- Điều chỉnh trọng số `OPENSEARCH_KEYWORD_WEIGHT` theo nhu cầu.
+
+---
+
+## Nhập dữ liệu mẫu
+
+- Chọn thuộc tính tạo embeddings; chuyển ảnh Base64; sinh embedding Titan; bulk vào index.  
+- Dataset mẫu: sản phẩm bán lẻ (hình ảnh + metadata).
+
+---
+
+## Tạo hàm truy vấn kiểm thử
+
+- **Keyword search**: `multi_match` với `query_text`.  
+- **Semantic search**: `neural` với `query_text`, `query_image`, `model_id`.  
+- **Hybrid search**: kết hợp hai truy vấn trên qua pipeline.
+
+---
+
+## Thử nghiệm
+
+- Keyword: bám tên/thuộc tính, thiếu ngữ cảnh.  
+- Semantic: hiểu ngữ cảnh, đôi khi ưu tiên hình ảnh hơn màu sắc.  
+- Hybrid: gộp điểm, đẩy kết quả phù hợp (đúng màu + phong cách) lên đầu.
+
+---
+
+## Dọn dẹp
+
+Xóa index, model deployment, model, model group, connector Bedrock; nếu tạo domain riêng cho lab, có thể xóa domain hoặc chỉ xóa tài nguyên thử nghiệm để tránh chi phí.
+
+---
+
+## Kết luận
+
+Hybrid search đa phương thức trên OpenSearch Service kết hợp điểm mạnh keyword + semantic, nhờ Titan Multimodal Embeddings G1 (Bedrock). Hỗ trợ truy vấn văn bản + hình ảnh, cho kết quả chính xác và phù hợp hơn. Thử notebook, tinh chỉnh normalization/trọng số. Nếu cần model tùy chỉnh trên SageMaker, xem “Hybrid Search with Amazon OpenSearch Service”; nếu chỉ cần semantic, tham khảo hướng dẫn search text & image với Bedrock + OpenSearch.
+
+---
+
+## Về tác giả
+
+- **Renan Bertolazzi** – Kiến trúc sư Giải pháp Doanh nghiệp tại AWS, hỗ trợ khách hàng đổi mới và đơn giản hóa.  
+- **Birender Pal** – Kiến trúc sư Giải pháp Cấp cao tại AWS, tập trung cloud-native, ML, GenAI.  
+- **Sarath Krishnan** – Kiến trúc sư Giải pháp Cấp cao tại AWS, kinh nghiệm high availability, tối ưu chi phí; trọng tâm DevOps, ML, MLOps, AI tạo sinh.

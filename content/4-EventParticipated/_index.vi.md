@@ -1,47 +1,28 @@
 ---
-title: "Khám Phá Agentic AI – Workshop Amazon QuickSuite"
-date: 2025-11-07
-weight: 2
+title: "Các sự kiện đã tham gia"
+date: "2025-09-09T19:53:52+07:00"
+weight: 4
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4. </b> "
 ---
 
-### Khám Phá Agentic AI – Workshop Amazon QuickSuite
+{{% notice warning %}}
+⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
+{{% /notice %}}
 
-**- Ngày:** 7 tháng 11, 2025
-**- Địa điểm:** Văn phòng AWS Việt Nam, Bitexco Financial Tower, TP.HCM
+Phần này liệt kê các sự kiện bạn đã tham gia trong quá trình thực tập. Ví dụ:
 
+### [4.1. AWS Cloud Day Vietnam - AI Edition 2025](4.1-Event1/)
+**Ngày:** 18 tháng 9, 2025  
+**Địa điểm:** Số 2 đường Hải Triều, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
 
----
+Một sự kiện quan trọng dành cho cộng đồng công nghệ và doanh nghiệp Việt Nam, tập trung vào việc thúc đẩy chuyển đổi số thông qua sự hội tụ của Điện toán đám mây và Trí tuệ nhân tạo.
 
-#### Tổng quan sự kiện
+### [4.2. Khám Phá Agentic AI – Workshop Amazon QuickSuite](4.2-Event2/)
+**Ngày:** 7 tháng 11, 2025  
+**Địa điểm:** Văn phòng AWS Việt Nam, Bitexco Financial Tower, TP.HCM
 
 Một workshop đặc biệt tập trung vào sự chuyển dịch từ AI Tạo sinh (Generative AI) thụ động sang AI Tác tử (Agentic AI) tự chủ. Sự kiện đã có buổi trình diễn trực tiếp đầu tiên của Amazon QuickSuite tại Việt Nam và giới thiệu Chương trình AWS LIFT để giảm bớt rào cản tài chính cho việc áp dụng.
 
-**Mục tiêu chính:**
-*   **Định nghĩa Agentic AI:** Làm rõ khái niệm về các tác tử AI tự chủ có khả năng suy luận và thực thi nhiệm vụ.
-*   **Giới thiệu Amazon QuickSuite:** Trình diễn nền tảng hợp nhất giữa trực quan hóa dữ liệu (QuickSight) và AI tạo sinh (Quick Suite Q).
-*   **Hỗ trợ học tập thực hành:** Cung cấp một môi trường thực tế để xây dựng các khái niệm AI với sự hướng dẫn của chuyên gia.
-*   **Thúc đẩy áp dụng:** Cung cấp khoản tín dụng 80.000 USD thông qua Chương trình AWS LIFT để thúc đẩy R&D.
-
----
-
-#### Bài học và Erkenntnisse chính
-
-*   **Tập trung vào tính tự chủ:** Mục tiêu thiết kế của Agentic AI là xây dựng các hệ thống hành động thay mặt người dùng, không chỉ cung cấp thông tin.
-*   **Cách tiếp cận hệ sinh thái là rất quan trọng:** Các tác tử hiệu quả đòi hỏi một mạng lưới công cụ được kết nối, giống như mạng lưới được cung cấp bởi QuickSuite, để liên kết các nguồn dữ liệu với logic hành động.
-*   **Việc áp dụng sớm tạo ra lợi thế:** Việc thành thạo các công cụ như QuickSuite trước khi chúng trở nên phổ biến sẽ mang lại một lợi thế cạnh tranh đáng kể.
-*   **Nguồn vốn thúc đẩy sự đổi mới:** Các ưu đãi tài chính như chương trình LIFT cho phép các công ty thử nghiệm và đổi mới nhanh hơn.
-
----
-
-#### Ứng dụng vào Công việc
-
-1.  **Khám phá QuickSuite cho Phân tích:** Nghiên cứu việc tích hợp QuickSight và Quick Suite Q để tạo ra các "Tác tử Phân tích" có thể tự động hóa việc báo cáo và phân tích dữ liệu.
-2.  **Đảm bảo kinh phí cho R&D:** Đăng ký Chương trình AWS LIFT để đảm bảo các khoản tín dụng cho các dự án nghiên cứu và phát triển liên quan đến AI sắp tới.
-3.  **Xác định các trường hợp sử dụng tự động hóa:** Kiểm tra các hoạt động nội bộ để tìm các tác vụ lặp đi lặp lại, nhiều bước phù hợp để một tác tử AI thực hiện tự chủ.
-4.  **Hợp tác với các đối tác triển khai:** Hợp tác với các đối tác như Cloud Kinetics để thiết kế và triển khai kiến trúc phức tạp, giảm thiểu rủi ro phát triển nội bộ.
-
----
-#### Hình ảnh sự kiện
-*Thêm hình ảnh sự kiện của bạn tại đây*
+### [4.3. AWS Cloud Mastery Series #3 - Security Pillar Deep Dive](4.3-Event3/)
+*Thêm thông tin sự kiện của bạn tại đây*

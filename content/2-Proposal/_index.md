@@ -3,113 +3,118 @@ title: "Proposal"
 date: "2025-09-09T19:53:52+07:00"
 weight: 2
 chapter: false
-pre: " <b> 2. </b> "
+pre: "<b> 2. </b>"
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
+## **Aurora Time**
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+---
 
-### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+### **Executive Summary**
+This proposal presents the implementation plan for **Aurora Time**, a time-management application built on AWS.  
+The goal is to provide a simple, intuitive, and cost-efficient scheduling tool for individual users.
 
-### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+Aurora Time leverages **Serverless** and **Managed Services** on AWS to achieve scalability, high reliability, and cost optimization — delivering **rapid return on investment (ROI)** by eliminating infrastructure maintenance overhead.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+---
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+### **Problem Statement**
 
-### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+#### **Current Problems**
+Users struggle to manage their personal schedules because information is scattered across many tools (notes, phones, various apps).  
+Existing solutions are often overly complex, business-oriented, and not suited for individual use.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+**Aurora Time** provides a **centralized, minimalistic, and intuitive** solution that helps users easily manage habits and personal events.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+#### **Proposed Solution**
+Aurora Time uses **Amazon S3** and **CloudFront** to store and distribute the web application, and **AWS Amplify** for quick deployment.  
+**Amazon API Gateway** and **AWS Lambda** handle backend CRUD operations, while **DynamoDB** provides fast and stable data storage.  
+**Amazon Cognito** handles user authentication, and **EventBridge** & **SES** send automated reminders.
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+**Key Features:**
+- Intuitive scheduling interface  
+- Custom reminders  
+- Extremely low cost  
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+---
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+### **Benefits and Return on Investment (ROI)**
+Aurora Time helps users save time, reduce scattered scheduling, and increase productivity.  
+- **Infrastructure cost:** $16 – $50/month (~$192 – $600/year)  
+- **ROI:** Under 6 months  
+- **Advantages:** No servers needed, ultra-low cost, highly scalable  
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+---
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+### **Solution Architecture**
+Aurora Time applies an **AWS Serverless architecture** that allows flexible scaling from a single user to millions.  
+Requests are received by **Amazon API Gateway**, processed by **AWS Lambda**, and stored in **DynamoDB**.  
+**EventBridge** schedules and triggers reminders, **AWS Amplify** hosts the frontend, and **Cognito** provides security.
 
-### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+<div style="text-align: center;">
+  <img src="/images/2-Proposal/aurora-architecture.jpeg" alt="AWS Serverless Architecture for Aurora Time" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
+</div>
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+---
 
-Total: $0.7/month, $8.40/12 months
+### **AWS Services Used**
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+| AWS Service | Function |
+|--------------|------------|
+| **AWS Lambda** | Handles CRUD business logic and reminders. |
+| **Amazon API Gateway** | Provides secure RESTful APIs. |
+| **Amazon DynamoDB** | Stores scheduling, event, and user data. |
+| **Amazon S3 & CloudFront** | Stores and distributes the frontend content. |
+| **Amazon EventBridge** | Schedules and triggers automated events. |
+| **Amazon SES** | Sends reminder emails to users. |
+| **AWS Amplify** | Hosts and manages the frontend. |
+| **Amazon Cognito** | Secure user authentication and management. |
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+### **Technical Implementation Plan**
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+1. **January – Research & Architecture Design:**  
+   DynamoDB modeling, Serverless architecture (API Gateway, Lambda, EventBridge).  
+2. **January – POC & Cost Estimation:**  
+   AWS Pricing Calculator, testing Cognito + DynamoDB.  
+3. **February – System Optimization:**  
+   Tune Lambda (timeout, memory), optimize DynamoDB RCU/WCU.  
+4. **February–March – Development & CI/CD:**  
+   Build Lambda functions, set up CodePipeline + CodeBuild, develop React UI, Beta testing.  
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+---
 
-### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+### **Estimated Infrastructure Cost**
+
+| Service | Description | Monthly Cost (USD) |
+|----------|--------|--------------------|
+| AWS Amplify | Static web hosting | 0.35 |
+| S3 | Static files & backup | 0.05 |
+| CloudFront | CDN (20GB) | 1.70 |
+| API Gateway | 30,000 requests | 0.11 |
+| Lambda | 1M requests (free tier) | 0.00 |
+| DynamoDB | 1GB data (free tier) | 0.11 |
+| Cognito | <1000 users | 0.00 |
+| SES | 500 emails/month | 0.05 |
+| EventBridge | 100k events | 0.10 |
+| CloudWatch Logs | 1GB logs | 0.10 |
+| CI/CD Pipeline | 20 builds | 0.00 |
+
+👉 **Total Estimated Cost:** ~ $16 – $50/month (~$192 – $600/year)
+
+---
+
+### **Risks & Mitigation**
+
+| Risk | Impact | Probability | Mitigation |
+|--------|------------|-----------|-------------|
+| Network outage | Medium | Medium | Use cache & CDN (CloudFront). |
+| DynamoDB failure | High | Medium | Conduct POC & load testing. |
+| Cost overrun | Medium | Low | Set up AWS Budgets alerts. |
+| EventBridge/Lambda failure | High | Low | Monitor via CloudWatch & retry logic. |
+
+---
+
+### **Expected Outcomes**
+- Simple, intuitive scheduling with automated reminders.  
+- Stable, low-cost, scalable serverless system.  
+- Full deployment during internship with automated CI/CD.  
