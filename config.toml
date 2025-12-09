@@ -19,6 +19,8 @@ home = [ "HTML", "RSS", "JSON"]
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
+  avatar = "/images/IMG_0449.jpg"
+  logo = "/images/IMG_0449.jpg"
   
 [Languages]
 [Languages.en]
