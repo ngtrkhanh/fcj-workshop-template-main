@@ -1,37 +1,37 @@
-name: Deploy Hugo site to GitHub Pages
-
+name: Hugo Pages
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          fetch-depth: 0
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.134.3'
+        extended: true
+    - uses: actions/configure-pages@v5
+    - run: hugo --minify
+    - uses: actions/upload-pages-artifact@v4
+      with:
+        path: ./public
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: "0.134.3"
-          extended: true
-
-      - name: Build website
-        run: hugo --minify
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: main # <- đảm bảo đúng tên nhánh bạn dùng để deploy
-          force_orphan: true # <- đảm bảo xóa lịch sử cũ ở nhánh gh-pages (giảm lỗi)
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/deploy-pages@v4
+      id: deployment
