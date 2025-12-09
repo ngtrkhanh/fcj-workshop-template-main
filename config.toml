@@ -1,5 +1,4 @@
 baseURL = "https://thienluhoan.github.io/workshop-template/"
-relativeURLs = true
 canonifyURLs = true
 languageCode = "en-US"
 defaultContentLanguage = "en"
