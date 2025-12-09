@@ -46,6 +46,7 @@ jobs:
           hugo \
             --gc \
             --minify
+            --baseURL "https://thienluhoan.github.io/workshop-template/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
